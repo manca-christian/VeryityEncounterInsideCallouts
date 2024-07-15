@@ -1,14 +1,45 @@
-<div class="card">
-<input type="text" name="inside callouts" id="insidecallouts">
-<div class="card-wrap">
-      <button class="btn-card"><img class="select-image" src="assets/images/circle_1.jpg" alt="circle" /></button>
-      <button class="btn-card"><img class="select-image" src="assets/images/square_1.jpg" alt="square" /></button>
-      <button class="btn-card"><img class="select-image" src="assets/images/triangle_1.jpg" alt="triangle" /></button>
+<div class="wrap">
+  <label style="margin: 0 auto 0 auto"
+    >Fast Selection<input
+      type="text"
+      name="inside callouts"
+      id="insidecallouts"
+  /></label>
 </div>
-  <select class="select" name="figure" id="figure">
-    <option value=""></option>
-    <option value="cirle">circle</option>
-    <option value="square">square</option>
-    <option value="triangle">triangle</option>
-  </select>
+<div class="card">
+  <div class="card-wrap">
+    <button
+      class="btn-card"
+      [ngClass]="{ selected: selectedCard === 1 }"
+      (click)="select(1)"
+    >
+      <img class="select-image" src="assets/images/circle.svg" alt="circle" />
+    </button>
+    <button
+      class="btn-card"
+      [ngClass]="{ selected: selectedCard === 2 }"
+      (click)="select(2)"
+    >
+      <img class="select-image" src="assets/images/square.svg" alt="square" />
+    </button>
+    <button
+      class="btn-card"
+      [ngClass]="{ selected: selectedCard === 3 }"
+      (click)="select(3)"
+    >
+      <img
+        class="select-image"
+        src="assets/images/triangle.svg"
+        alt="triangle"
+      />
+    </button>
+  </div>
+  <div class="select-wrap">
+    <select (change)="onOptionSelected($event)">
+      <option value=""></option>
+      <option value="circle">circle</option>
+      <option value="square">square</option>
+      <option value="triangle">triangle</option>
+    </select>
+  </div>
 </div>

@@ -7,7 +7,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 15px;
+    margin: 3px;
 }
 .card-wrap{
     width: 100%;
@@ -17,5 +17,19 @@
 .card{
     margin: 0 auto 0 auto;
     width: fit-content;
-    border: 3px solid black;
+    box-shadow: 10px 10px 5px ;
+}
+.select{
+    width: 80%;
+    margin: 10px auto 10px auto;
+}
+.select-wrap{
+    display: flex;
+}
+.btn-card :active{
+    width: 30px;
+    height: 30px;
+}
+.selected{
+    background-color:gray;
 }
