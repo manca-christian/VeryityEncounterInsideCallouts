@@ -46,8 +46,10 @@ export class SelectCardComponent {
 
   onOptionSelected(event: Event): void {
     const selectedValue = (event.target as HTMLSelectElement).value;
-    console.log('Opzione selezionata:', selectedValue);
-    this.select(this.getShapeIdFromValue(selectedValue));
+    if (selectedValue) {
+      console.log('Opzione selezionata:', selectedValue);
+      this.select(this.getShapeIdFromValue(selectedValue));
+    }
   }
 
   getShapeIdFromValue(value: string): number {
@@ -66,8 +68,10 @@ export class SelectCardComponent {
 
   onInputChange(event: Event): void {
     const inputValue = (event.target as HTMLInputElement).value.toUpperCase();
-    console.log('Input value:', inputValue);
-    this.select(this.getShapeIdFromInputValue(inputValue));
+    if (inputValue) {
+      console.log('Input value:', inputValue);
+      this.select(this.getShapeIdFromInputValue(inputValue));
+    }
   }
 
   getShapeIdFromInputValue(value: string): number {
@@ -91,40 +95,35 @@ export class SelectCardComponent {
 
   generateSteps() {
     this.steps = [];
-    const guardianShape = this.selectedShape;
-    const uniqueBackgroundShape = this.backgroundShapes.find(
-      (shape) => shape !== guardianShape
-    );
-    const duplicateBackgroundShape = this.backgroundShapes.find(
-      (shape) => shape === guardianShape
-    );
-
-    if (uniqueBackgroundShape && duplicateBackgroundShape) {
-      if (
-        [guardianShape, duplicateBackgroundShape].every(
-          (shape) =>
-            shape === 'Circle' || shape === 'Square' || shape === 'Triangle'
-        )
-      ) {
-        this.steps.push(
-          'Step 1: Wait until your team is also ready with the first step.'
-        );
-        this.steps.push(
-          `Step 2: Take 2 ${duplicateBackgroundShape}s and give them to the statues that are not holding a ${duplicateBackgroundShape}.`
-        );
-      } else {
-        this.steps.push(
-          `Step 1: Take the ${uniqueBackgroundShape} and give it to the statue that is holding a ${uniqueBackgroundShape}.`
-        );
-        this.steps.push(
-          `Step 2: Wait until your team is also ready with the first step.`
-        );
-        this.steps.push(
-          `Step 3: Take 2 ${duplicateBackgroundShape}s and give them to the 2 statues that are not holding a ${duplicateBackgroundShape}.`
-        );
-      }
+    const guardianShape = this.selectedShape?? '';
+    const backgroundShapes = this.backgroundShapes.filter(shape => shape !== guardianShape);
+    const duplicateBackgroundShape = this.backgroundShapes.find(shape => shape === guardianShape);
+  
+    if (backgroundShapes.length === 2 && duplicateBackgroundShape) {
+      this.generateStepsForTwoBackgroundShapes(backgroundShapes, guardianShape);
+    } else if (duplicateBackgroundShape) {
+      this.generateStepsForDuplicateBackgroundShape(guardianShape, duplicateBackgroundShape);
     } else {
       console.error('Invalid combination of shapes');
+    }
+  }
+  
+  generateStepsForTwoBackgroundShapes(backgroundShapes: string[], guardianShape: string) {
+    backgroundShapes.forEach((shape, index) => {
+      this.steps.push(`Step ${index + 1}: Take the ${shape} and give it to the statue that is holding a ${shape}.`);
+    });
+    this.steps.push(`Step ${backgroundShapes.length + 1}: Wait for your team to send you the two ${guardianShape}s.`);
+    this.steps.push(`Step ${backgroundShapes.length + 2}: Take two ${guardianShape}s and give them to the statues that are NOT holding a ${guardianShape}.`);
+  }
+  
+  generateStepsForDuplicateBackgroundShape(guardianShape: string, duplicateBackgroundShape: string) {
+    if ([guardianShape, duplicateBackgroundShape].every((shape) => shape === 'Circle' || shape === 'Square' || shape === 'Triangle')) {
+      this.steps.push('Step 1: Wait until your team is also ready with the first step.');
+      this.steps.push(`Step 2: Take 2 ${duplicateBackgroundShape}s and give them to the statues that are not holding a ${duplicateBackgroundShape}.`);
+    } else {
+      this.steps.push(`Step 1: Take the ${duplicateBackgroundShape} and give it to the statue that is holding a ${duplicateBackgroundShape}.`);
+      this.steps.push(`Step 2: Wait until your team is also ready with the first step.`);
+      this.steps.push(`Step 3: Take 2 ${duplicateBackgroundShape}s and give them to the 2 statues that are not holding a ${duplicateBackgroundShape}.`);
     }
   }
 }
