@@ -15,6 +15,7 @@ export class SelectCardComponent {
   selectedShape: string | undefined;
   backgroundShapes: string[] = [];
   steps: string[] = [];
+  card: number = 1;
   nameArray: string[] = [
     'Guardian symbol',
     'First background symbol',

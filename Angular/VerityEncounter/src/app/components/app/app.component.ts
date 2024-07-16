@@ -5,6 +5,7 @@ import { SelectCardComponent } from '../select-card/select-card.component';
 import {
   FormBuilder,
   FormGroup,
+  FormsModule,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
@@ -17,6 +18,7 @@ import {
     CommonModule,
     SelectCardComponent,
     ReactiveFormsModule,
+    FormsModule
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',

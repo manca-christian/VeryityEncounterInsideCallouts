@@ -15,6 +15,7 @@
   <app-select-card
     *ngFor="let card of cardArray"
     class="card{{ card }}"
+    (ngModel)="(card)"
   ></app-select-card>
 </div>
 
