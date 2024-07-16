@@ -15,6 +15,7 @@ export class AppComponent {
   title = 'VerityEncounter';
   cardArray: number[] = [0, 1, 2];
   characterForm: FormGroup;
+  a: SelectCardComponent | undefined;
   errorMessage: string = '';
 
   constructor(private fb: FormBuilder) {
@@ -41,4 +42,19 @@ export class AppComponent {
       this.errorMessage = '';
     }
   }
+
+  getShapeIdFromInputValue(value: string): number {
+    switch (value) {
+      case 'C':
+        return 1;
+      case 'S':
+        return 2;
+      case 'T':
+        return 3;
+      default:
+        console.log('Input non gestito:', value);
+        return 0;
+    }
+  }
+  
 }
