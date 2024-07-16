@@ -1,5 +1,5 @@
 <div class="card">
-  <p>{{ nameArray[card] }}</p>
+  <p>{{ nameArray[index] }}</p>
   <div class="card-wrap">
     <button
       class="btn-card"
@@ -32,6 +32,7 @@
       style="width: 100%"
       (change)="onOptionSelected($event)"
       [(ngModel)]="selectedShape"
+      id="{{index}}"
     >
       <option value=""></option>
       <option value="Circle">Circle</option>
@@ -40,3 +41,4 @@
     </select>
   </div>
 </div>
+

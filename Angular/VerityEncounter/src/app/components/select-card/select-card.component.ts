@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -10,6 +10,8 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './select-card.component.scss',
 })
 export class SelectCardComponent {
+  @Input() index!: number;
+  @Input() selectString!: string;
   selectedOption: string = '';
   selectedCard: number | undefined;
   selectedShape: string | undefined;
@@ -19,7 +21,7 @@ export class SelectCardComponent {
   nameArray: string[] = [
     'Guardian symbol',
     'First background symbol',
-    'Second background symbol',
+    'Second background symbol',
   ];
   setOptionValue(option: string): void {
     this.selectedOption = option;
@@ -77,6 +79,12 @@ export class SelectCardComponent {
       case 'S':
         return 2;
       case 'T':
+        return 3;
+      case 'c':
+        return 1;
+      case 's':
+        return 2;
+      case 't':
         return 3;
       default:
         console.log('Input non gestito:', value);

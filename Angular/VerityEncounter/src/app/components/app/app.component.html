@@ -11,17 +11,22 @@
   />
   <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
 </div>
+
 <div class="grid-container">
   <app-select-card
     *ngFor="let card of cardArray"
     class="card{{ card }}"
-    (ngModel)="(card)"
+    id="card{{ card }}"
+    [index]="card"
   ></app-select-card>
 </div>
 
-<div class="text-area">
-  <label for="steps">Steps</label>
-  <textarea id="steps" rows="4" cols="50" disabled>
-  (input risultati step)
-  </textarea>
+<div class="form-floating">
+  <div
+    class="form-control w-50"
+    style="resize: none; border: solid; border-color: gray; height: 150px"
+    id="resultTextarea"
+  >
+    <p style="font-weight: bold">Steps</p>
+  </div>
 </div>
