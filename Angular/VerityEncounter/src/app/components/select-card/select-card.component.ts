@@ -1,18 +1,35 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-select-card',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './select-card.component.html',
   styleUrl: './select-card.component.scss',
 })
 export class SelectCardComponent {
   selectedCard: number | undefined;
+  selectedShape: string | undefined; 
+
   select(id: number) {
     this.selectedCard = id;
-    console.log(id);
+    switch (id) {
+      case 1:
+        this.selectedShape = 'Circle';
+        break;
+      case 2:
+        this.selectedShape = 'Square';
+        break;
+      case 3:
+        this.selectedShape = 'Triangle';
+        break;
+      default:
+        console.log('Figura non gestita:', id);
+        break;
+    }
+    console.log(this.selectedShape);
   }
 
   onOptionSelected(event: Event): void {
