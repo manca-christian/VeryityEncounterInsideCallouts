@@ -1,5 +1,19 @@
-<div class="wrap">
-  <label for="insidecallouts" class="callouts">Inside Callouts</label>
-  <input type="text" class="input callouts" name="inside callouts" id="insidecallouts" />
+<div [formGroup]="characterForm" class="wrap">
+  <label for="charInput" class="callouts">Inside Callouts</label>
+  <input
+    style="width: 60%; margin: 0 auto 0 auto; border-radius: 20px;"
+    placeholder="CST *max 3 char*"
+    id="charInput"
+    formControlName="charInput"
+    (input)="onInput()"
+    maxlength="3"
+    type="text"
+  />
+  <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
 </div>
-<app-select-card></app-select-card>
+<div class="grid-container">
+  <app-select-card
+    *ngFor="let card of cardArray"
+    class="card{{ card }}"
+  ></app-select-card>
+</div>

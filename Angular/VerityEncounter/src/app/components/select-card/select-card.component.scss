@@ -1,65 +1,64 @@
-.select-image{
-    width: 2.5rem;
-    height: 2.5rem;
-    width: 4rem;
-    height: 4rem;
+.select-image {
+  width: 2.5rem;
+  height: 2.5rem;
+  width: 4rem;
+  height: 4rem;
 }
-.btn-card{
-    background: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 3px;
+.btn-card {
+  background: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 3px;
 }
-.card-wrap{
-    width: 100%;
-    display: grid;
-    grid-template-columns: 33% 33% 33%;
+.card-wrap {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 33% 33% 33%;
 }
-.card{
-    margin: 0 auto 0 auto;
-    width: fit-content;
-    border-radius: 0.375rem;
-    border-width: 2px;
-    padding: 0.5rem;
-    text-transform: none;
-    font-family: inherit;
-    font-size: 100%;
-    line-height: inherit;
-    color: inherit;
-    box-shadow: 10px 10px 5px ;
-    border-radius: 20px;
-    padding: 1rem;
+.card {
+  margin: 0 auto 0 auto;
+  width: fit-content;
+  border-radius: 0.375rem;
+  border-width: 2px;
+  padding: 0.5rem;
+  text-transform: none;
+  font-family: inherit;
+  font-size: 100%;
+  line-height: inherit;
+  color: inherit;
+  box-shadow: 10px 10px 5px;
+  border-radius: 20px;
+  padding: 1rem;
 }
-.select{
-    width: 80%;
-    margin: 10px auto 10px auto;
+.select {
+  width: 80%;
+  margin: 10px auto 10px auto;
 }
-.select-wrap{
-    display: inline-block;
-    position: relative;
-    width: 100%;
-    padding: 10px;
+.select-wrap {
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  padding: 10px;
 }
-.btn-card :active{
-    width: 3.5rem;
-    height: 3.5rem;
+.btn-card :active {
+  width: 3.5rem;
+  height: 3.5rem;
 }
-.selected{
-    background-color: #d1d5db;
-    border: 2px solid #3452b4;
+.selected {
+  background-color: #d1d5db;
+  border: 2px solid #3452b4;
 }
 
 .select-wrap select {
-    margin: 0 auto 0 auto;
-    width: fit-content;
-    border-radius: 0.375rem;
-    border-width: 2px;
-    padding: 0.5rem;
-    text-transform: none;
-    font-family: inherit;
-    font-size: 100%;
-    line-height: inherit;
-    color: inherit;
-    
+  margin: 0 auto 0 auto;
+  width: fit-content;
+  border-radius: 0.375rem;
+  border-width: 2px;
+  padding: 0.5rem;
+  text-transform: none;
+  font-family: inherit;
+  font-size: 100%;
+  line-height: inherit;
+  color: inherit;
 }
