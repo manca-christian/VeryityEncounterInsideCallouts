@@ -1,6 +1,8 @@
 .select-image{
     width: 2.5rem;
     height: 2.5rem;
+    width: 4rem;
+    height: 4rem;
 }
 .btn-card{
     background: none;
@@ -25,6 +27,9 @@
     font-size: 100%;
     line-height: inherit;
     color: inherit;
+    box-shadow: 10px 10px 5px ;
+    border-radius: 20px;
+    padding: 1rem;
 }
 .select{
     width: 80%;
@@ -37,8 +42,8 @@
     padding: 10px;
 }
 .btn-card :active{
-    width: 30px;
-    height: 30px;
+    width: 3.5rem;
+    height: 3.5rem;
 }
 .selected{
     background-color: #d1d5db;

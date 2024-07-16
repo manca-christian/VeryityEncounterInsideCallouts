@@ -10,9 +10,14 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './select-card.component.scss',
 })
 export class SelectCardComponent {
+  selectedOption: string = '';
   selectedCard: number | undefined;
   selectedShape: string | undefined; 
 
+
+  setOptionValue(option: string): void {
+    this.selectedOption = option;
+  }
   select(id: number) {
     this.selectedCard = id;
     switch (id) {
@@ -31,7 +36,6 @@ export class SelectCardComponent {
     }
     console.log(this.selectedShape);
   }
-
   onOptionSelected(event: Event): void {
     const selectedValue = (event.target as HTMLSelectElement).value;
     console.log('Opzione selezionata:', selectedValue);
