@@ -27,11 +27,13 @@
     </button>
   </div>
   <div class="select-wrap">
-    <select class="select" name="dropdown" (change)="onOptionSelected($event)">
+    <div class="select-wrap">
+    <select (change)="onOptionSelected($event)" [(ngModel)]="selectedShape">
       <option value=""></option>
-      <option value="circle">circle</option>
-      <option value="square">square</option>
-      <option value="triangle">triangle</option>
+      <option value="Circle">Circle</option>
+      <option value="Square">Square</option>
+      <option value="Triangle">Triangle</option>
     </select>
+  </div>
   </div>
 </div>
