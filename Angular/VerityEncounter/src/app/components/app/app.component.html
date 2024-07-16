@@ -1,8 +1,8 @@
 <div [formGroup]="characterForm" class="wrap">
   <label for="charInput" class="callouts">Inside Callouts</label>
   <input
-    style="width: 60%; margin: 0 auto 0 auto; border-radius: 20px;"
-    placeholder="CST"
+    style="width: 60%; margin: 0 auto 0 auto; border-radius: 20px"
+    placeholder="CST *max 3 char*"
     id="charInput"
     formControlName="charInput"
     (input)="onInput()"
@@ -16,4 +16,11 @@
     *ngFor="let card of cardArray"
     class="card{{ card }}"
   ></app-select-card>
+</div>
+
+<div class="text-area">
+  <label for="steps">Steps</label>
+  <textarea id="steps" rows="4" cols="50" disabled>
+  (input risultati step)
+  </textarea>
 </div>
