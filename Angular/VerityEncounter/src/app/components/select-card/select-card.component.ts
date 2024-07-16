@@ -9,12 +9,15 @@ import { Component } from '@angular/core';
   styleUrl: './select-card.component.scss',
 })
 export class SelectCardComponent {
+  selectedOption: string = '';
   selectedCard: number | undefined;
+
+  setOptionValue(option: string): void {
+    this.selectedOption = option;
+  }
   select(id: number) {
     this.selectedCard = id;
-    console.log(id);
   }
-
   onOptionSelected(event: Event): void {
     const selectedValue = (event.target as HTMLSelectElement).value;
     console.log('Opzione selezionata:', selectedValue);

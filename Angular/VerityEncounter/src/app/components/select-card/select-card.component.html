@@ -1,31 +1,23 @@
-<div class="wrap">
-  <label style="margin: 0 auto 0 auto"
-    >Fast Selection<input
-      type="text"
-      name="inside callouts"
-      id="insidecallouts"
-  /></label>
-</div>
 <div class="card">
   <div class="card-wrap">
     <button
       class="btn-card"
       [ngClass]="{ selected: selectedCard === 1 }"
-      (click)="select(1)"
+      (click)="select(1);setOptionValue('circle')"
     >
       <img class="select-image" src="assets/images/circle.svg" alt="circle" />
     </button>
     <button
       class="btn-card"
       [ngClass]="{ selected: selectedCard === 2 }"
-      (click)="select(2)"
+      (click)="select(2);setOptionValue('square')"
     >
       <img class="select-image" src="assets/images/square.svg" alt="square" />
     </button>
     <button
       class="btn-card"
       [ngClass]="{ selected: selectedCard === 3 }"
-      (click)="select(3)"
+      (click)="select(3);setOptionValue('triangle')"
     >
       <img
         class="select-image"
@@ -35,7 +27,7 @@
     </button>
   </div>
   <div class="select-wrap">
-    <select (change)="onOptionSelected($event)">
+    <select class="select" name="dropdown" (change)="onOptionSelected($event)">
       <option value=""></option>
       <option value="circle">circle</option>
       <option value="square">square</option>
