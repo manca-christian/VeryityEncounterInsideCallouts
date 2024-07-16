@@ -1,23 +1,24 @@
 <div class="card">
+  <p>{{ nameArray[1] }}</p>
   <div class="card-wrap">
     <button
       class="btn-card"
       [ngClass]="{ selected: selectedCard === 1 }"
-      (click)="select(1);setOptionValue('circle')"
+      (click)="select(1); setOptionValue('circle')"
     >
       <img class="select-image" src="assets/images/circle.svg" alt="circle" />
     </button>
     <button
       class="btn-card"
       [ngClass]="{ selected: selectedCard === 2 }"
-      (click)="select(2);setOptionValue('square')"
+      (click)="select(2); setOptionValue('square')"
     >
       <img class="select-image" src="assets/images/square.svg" alt="square" />
     </button>
     <button
       class="btn-card"
       [ngClass]="{ selected: selectedCard === 3 }"
-      (click)="select(3);setOptionValue('triangle')"
+      (click)="select(3); setOptionValue('triangle')"
     >
       <img
         class="select-image"
@@ -27,7 +28,11 @@
     </button>
   </div>
   <div class="select-wrap">
-    <select style="width: 100%;" (change)="onOptionSelected($event)" [(ngModel)]="selectedShape">
+    <select
+      style="width: 100%"
+      (change)="onOptionSelected($event)"
+      [(ngModel)]="selectedShape"
+    >
       <option value=""></option>
       <option value="Circle">Circle</option>
       <option value="Square">Square</option>

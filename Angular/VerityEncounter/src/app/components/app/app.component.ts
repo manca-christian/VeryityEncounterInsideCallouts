@@ -2,18 +2,29 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { SelectCardComponent } from '../select-card/select-card.component';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, CommonModule, SelectCardComponent, ReactiveFormsModule],
+  imports: [
+    RouterOutlet,
+    CommonModule,
+    SelectCardComponent,
+    ReactiveFormsModule,
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
   title = 'VerityEncounter';
   cardArray: number[] = [0, 1, 2];
+
   characterForm: FormGroup;
   errorMessage: string = '';
 
@@ -27,7 +38,7 @@ export class AppComponent {
   }
 
   allowedCharacters(control: { value: string }) {
-    const validCharacters = /^[cst]*$/;
+    const validCharacters = /^[cstCST]*$/;
     if (!validCharacters.test(control.value)) {
       return { invalidCharacter: true };
     }
