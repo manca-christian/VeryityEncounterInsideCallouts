@@ -2,6 +2,10 @@ import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
+/**
+ * SelectCardComponent is a standalone component that allows users to select a card and shape,
+ * and generates steps based on the selection.
+ */
 @Component({
   selector: 'app-select-card',
   standalone: true,
@@ -12,20 +16,24 @@ import { FormsModule } from '@angular/forms';
 export class SelectCardComponent {
   @Input() index!: number;
   @Input() selectString!: string;
+ 
   selectedOption: string = '';
   selectedCard: number | undefined;
   selectedShape: string | undefined;
   backgroundShapes: string[] = [];
   steps: string[] = [];
-  card: number = 1;
   nameArray: string[] = [
     'Guardian symbol',
     'First background symbol',
     'Second background symbol',
   ];
-  setOptionValue(option: string): void {
-    this.selectedOption = option;
-  }
+
+  private SHAPE_IDS = {
+    Circle: 1,
+    Square: 2,
+    Triangle: 3,
+  };
+
   select(id: number) {
     this.selectedCard = id;
     this.selectedShape = this.getShapeFromId(id);
@@ -34,11 +42,11 @@ export class SelectCardComponent {
 
   getShapeFromId(id: number): string {
     switch (id) {
-      case 1:
+      case this.SHAPE_IDS.Circle:
         return 'Circle';
-      case 2:
+      case this.SHAPE_IDS.Square:
         return 'Square';
-      case 3:
+      case this.SHAPE_IDS.Triangle:
         return 'Triangle';
       default:
         console.log('Figura non gestita:', id);
@@ -48,8 +56,10 @@ export class SelectCardComponent {
 
   onOptionSelected(event: Event): void {
     const selectedValue = (event.target as HTMLSelectElement).value;
-    console.log('Opzione selezionata:', selectedValue);
-    this.select(this.getShapeIdFromValue(selectedValue));
+    if (selectedValue) {
+      console.log('Opzione selezionata:', selectedValue);
+      this.select(this.getShapeIdFromValue(selectedValue));
+    }
   }
 
   getShapeIdFromValue(value: string): number {
@@ -66,10 +76,13 @@ export class SelectCardComponent {
     }
   }
 
+  
   onInputChange(event: Event): void {
     const inputValue = (event.target as HTMLInputElement).value.toUpperCase();
-    console.log('Input value:', inputValue);
-    this.select(this.getShapeIdFromInputValue(inputValue));
+    if (inputValue) {
+      console.log('Input value:', inputValue);
+      this.select(this.getShapeIdFromInputValue(inputValue));
+    }
   }
 
   getShapeIdFromInputValue(value: string): number {
@@ -97,42 +110,38 @@ export class SelectCardComponent {
     this.generateSteps();
   }
 
+  
   generateSteps() {
     this.steps = [];
-    const guardianShape = this.selectedShape;
-    const uniqueBackgroundShape = this.backgroundShapes.find(
-      (shape) => shape !== guardianShape
-    );
-    const duplicateBackgroundShape = this.backgroundShapes.find(
-      (shape) => shape === guardianShape
-    );
+    const guardianShape = this.selectedShape ?? '';
+    const backgroundShapes = this.backgroundShapes.filter(shape => shape !== guardianShape);
+    const duplicateBackgroundShape = this.backgroundShapes.find(shape => shape === guardianShape);
 
-    if (uniqueBackgroundShape && duplicateBackgroundShape) {
-      if (
-        [guardianShape, duplicateBackgroundShape].every(
-          (shape) =>
-            shape === 'Circle' || shape === 'Square' || shape === 'Triangle'
-        )
-      ) {
-        this.steps.push(
-          'Step 1: Wait until your team is also ready with the first step.'
-        );
-        this.steps.push(
-          `Step 2: Take 2 ${duplicateBackgroundShape}s and give them to the statues that are not holding a ${duplicateBackgroundShape}.`
-        );
-      } else {
-        this.steps.push(
-          `Step 1: Take the ${uniqueBackgroundShape} and give it to the statue that is holding a ${uniqueBackgroundShape}.`
-        );
-        this.steps.push(
-          `Step 2: Wait until your team is also ready with the first step.`
-        );
-        this.steps.push(
-          `Step 3: Take 2 ${duplicateBackgroundShape}s and give them to the 2 statues that are not holding a ${duplicateBackgroundShape}.`
-        );
-      }
+    if (backgroundShapes.length === 2 && duplicateBackgroundShape) {
+      this.generateStepsForTwoBackgroundShapes(backgroundShapes, guardianShape);
+    } else if (duplicateBackgroundShape) {
+      this.generateStepsForDuplicateBackgroundShape(guardianShape, duplicateBackgroundShape);
     } else {
-      console.error('Invalid combination of shapes');
+      throw new Error('Invalid combination of shapes');
+    }
+  }
+
+  private generateStepsForTwoBackgroundShapes(backgroundShapes: string[], guardianShape: string) {
+    backgroundShapes.forEach((shape, index) => {
+      this.steps.push(`Step ${index + 1}: Take the ${shape} and give it to the statue that is holding a ${shape}.`);
+    });
+    this.steps.push(`Step ${backgroundShapes.length + 1}: Wait for your team to send you the two ${guardianShape}s.`);
+    this.steps.push(`Step ${backgroundShapes.length + 2}: Take two ${guardianShape}s and give them to the statues that are NOT holding a ${guardianShape}.`);
+  }
+
+  private generateStepsForDuplicateBackgroundShape(guardianShape: string, duplicateBackgroundShape: string) {
+    if ([guardianShape, duplicateBackgroundShape].every((shape) => shape === 'Circle' || shape === 'Square' || shape === 'Triangle')) {
+      this.steps.push('Step 1: Wait until your team is also ready with the first step.');
+      this.steps.push(`Step 2: Take 2 ${duplicateBackgroundShape}s and give them to the statues that are not holding a ${duplicateBackgroundShape}.`);
+    } else {
+      this.steps.push(`Step 1: Take the ${duplicateBackgroundShape} and give it to the statue that is holding a ${duplicateBackgroundShape}.`);
+      this.steps.push(`Step 2: Wait until your team is also ready with the first step.`);
+      this.steps.push(`Step 3: Take 2 ${duplicateBackgroundShape}s and give them to the 2 statues that are not holding a ${duplicateBackgroundShape}.`);
     }
   }
 }
