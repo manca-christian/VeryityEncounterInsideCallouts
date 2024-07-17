@@ -2,10 +2,6 @@ import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-/**
- * SelectCardComponent is a standalone component that allows users to select a card and shape,
- * and generates steps based on the selection.
- */
 @Component({
   selector: 'app-select-card',
   standalone: true,
@@ -14,12 +10,13 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './select-card.component.scss',
 })
 export class SelectCardComponent {
+ 
+  @Input() selectedShape: string | undefined;
   @Input() index!: number;
   @Input() selectString!: string;
- 
   selectedOption: string = '';
   selectedCard: number | undefined;
-  selectedShape: string | undefined;
+  
   backgroundShapes: string[] = [];
   steps: string[] = [];
   nameArray: string[] = [
@@ -34,6 +31,9 @@ export class SelectCardComponent {
     Triangle: 3,
   };
 
+  setOptionValue(option: string): void {
+    this.selectedOption = option;
+  }
   select(id: number) {
     this.selectedCard = id;
     this.selectedShape = this.getShapeFromId(id);
@@ -85,22 +85,16 @@ export class SelectCardComponent {
     }
   }
 
-  getShapeIdFromInputValue(value: string): number {
-    switch (value) {
+  getShapeIdFromInputValue(char: string): number {
+    switch (char.toUpperCase()) {
       case 'C':
-        return 1;
+        return this.SHAPE_IDS.Circle;
       case 'S':
-        return 2;
+        return this.SHAPE_IDS.Square;
       case 'T':
-        return 3;
-      case 'c':
-        return 1;
-      case 's':
-        return 2;
-      case 't':
-        return 3;
+        return this.SHAPE_IDS.Triangle;
       default:
-        console.log('Input non gestito:', value);
+        console.log('Input non gestito:', char);
         return 0;
     }
   }

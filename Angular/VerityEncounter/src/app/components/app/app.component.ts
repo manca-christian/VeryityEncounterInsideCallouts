@@ -25,10 +25,12 @@ import {
 })
 export class AppComponent {
   title = 'VerityEncounter';
-  cardArray: number[] = [0, 1, 2];
-  i: number | undefined;
+    cards = [
+      { id: 0, selectedShape: null as number | null },
+      { id: 1, selectedShape: null as number | null },
+      { id: 2, selectedShape: null as number | null }
+    ]
   characterForm: FormGroup;
-  a: SelectCardComponent | undefined;
   errorMessage: string = '';
 
   constructor(private fb: FormBuilder) {
@@ -48,34 +50,30 @@ export class AppComponent {
     return null;
   }
 
-  onInput() {
-    if (this.characterForm.get('charInput')?.errors?.['invalidCharacter']) {
-      this.errorMessage = 'Solo i caratteri "c", "s" e "t" sono consentiti.';
-    } else {
-      this.errorMessage = '';
-      console.log(this.characterForm.get('charInput')?.value[0]);
-      console.log(this.characterForm.get('charInput')?.value[1]);
-      console.log(this.characterForm.get('charInput')?.value[2]);
-      const card0 = document.getElementById('card0') as HTMLInputElement;
-      const card1 = document.getElementById('card1') as HTMLInputElement;
-      const card2 = document.getElementById('card2') as HTMLInputElement;
-      console.log(card0)
-      card0.value = this.characterForm.get('charInput')?.value[0];
-      card1.value = this.characterForm.get('charInput')?.value[1];
-      card2.value = this.characterForm.get('charInput')?.value[2];
+ onInput() {
+  if (this.characterForm.get('charInput')?.errors?.['invalidCharacter']) {
+    this.errorMessage = 'Solo i caratteri "c", "s" e "t" sono consentiti.';
+  } else {
+    let inputValue = this.characterForm.get('charInput')!.value;
+    let chars: string[] = inputValue.toUpperCase();
+    for (let i = 0; i < chars.length; i++) {
+      let char = chars[i];
+      let shapeId = this.getShapeIdFromInputValue(char);
+      this.cards[i].selectedShape = shapeId;
     }
   }
+}
 
-  getShapeIdFromInputValue(value: string): number {
-    switch (value) {
+  getShapeIdFromInputValue(char: string): number {
+    switch (char.toUpperCase()) {
       case 'C':
-        return 1;
+        return 0;
       case 'S':
-        return 2;
+        return 1;
       case 'T':
-        return 3;
+        return 2;
       default:
-        console.log('Input non gestito:', value);
+        console.log('Input non gestito:', char);
         return 0;
     }
   }
