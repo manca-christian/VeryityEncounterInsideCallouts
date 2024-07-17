@@ -32,6 +32,7 @@ export class AppComponent {
     ]
   characterForm: FormGroup;
   errorMessage: string = '';
+prova: string|undefined;
 
   constructor(private fb: FormBuilder) {
     this.characterForm = this.fb.group({
@@ -50,19 +51,16 @@ export class AppComponent {
     return null;
   }
 
- onInput() {
-  if (this.characterForm.get('charInput')?.errors?.['invalidCharacter']) {
-    this.errorMessage = 'Solo i caratteri "c", "s" e "t" sono consentiti.';
-  } else {
-    let inputValue = this.characterForm.get('charInput')!.value;
-    let chars: string[] = inputValue.toUpperCase();
-    for (let i = 0; i < chars.length; i++) {
-      let char = chars[i];
-      let shapeId = this.getShapeIdFromInputValue(char);
-      this.cards[i].selectedShape = shapeId;
+  onInput() {
+    if (this.characterForm.get('charInput')?.errors?.['invalidCharacter']) {
+      this.errorMessage = 'Solo i caratteri "c", "s" e "t" sono consentiti.';
+    } else {
+      this.errorMessage = '';
+      this.prova = this.characterForm.get('charInput')?.value[0];
+      console.log(this.characterForm.get('charInput')?.value[1]);
+      console.log(this.characterForm.get('charInput')?.value[2]);
     }
   }
-}
 
   getShapeIdFromInputValue(char: string): number {
     switch (char.toUpperCase()) {
@@ -77,4 +75,7 @@ export class AppComponent {
         return 0;
     }
   }
+
 }
+
+  
