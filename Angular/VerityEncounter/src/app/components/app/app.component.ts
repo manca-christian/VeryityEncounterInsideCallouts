@@ -30,6 +30,7 @@ export class AppComponent {
   characterForm: FormGroup;
   a: SelectCardComponent | undefined;
   errorMessage: string = '';
+prova: string|undefined;
 
   constructor(private fb: FormBuilder) {
     this.characterForm = this.fb.group({
@@ -53,16 +54,9 @@ export class AppComponent {
       this.errorMessage = 'Solo i caratteri "c", "s" e "t" sono consentiti.';
     } else {
       this.errorMessage = '';
-      console.log(this.characterForm.get('charInput')?.value[0]);
+      this.prova = this.characterForm.get('charInput')?.value[0];
       console.log(this.characterForm.get('charInput')?.value[1]);
       console.log(this.characterForm.get('charInput')?.value[2]);
-      const card0 = document.getElementById('card0') as HTMLInputElement;
-      const card1 = document.getElementById('card1') as HTMLInputElement;
-      const card2 = document.getElementById('card2') as HTMLInputElement;
-      console.log(card0)
-      card0.value = this.characterForm.get('charInput')?.value[0];
-      card1.value = this.characterForm.get('charInput')?.value[1];
-      card2.value = this.characterForm.get('charInput')?.value[2];
     }
   }
 
