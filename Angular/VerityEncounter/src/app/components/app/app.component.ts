@@ -54,46 +54,31 @@ export class AppComponent {
   }
 
   onInput() {
-    if (this.characterForm.get('charInput')?.errors?.['invalidCharacter']) {
+    const inputControl = this.characterForm.get('charInput');
+    
+    if (inputControl?.errors?.['invalidCharacter']) {
       this.errorMessage = 'Solo i caratteri "c", "s" e "t" sono consentiti.';
     } else {
       this.errorMessage = '';
-      const inputValue = this.characterForm.get('charInput')!.value;
-      const shapeIds = [];
+      const inputValue = (inputControl?.value || '').toUpperCase().slice(0, 3);
+      
+      this.cards.forEach(card => card.selectedShape = null);
+      
       for (let i = 0; i < inputValue.length; i++) {
-        shapeIds.push(this.getShapeIdsFromInputValue(inputValue[i]));
+        const shapeId = this.getShapeIdFromChar(inputValue[i]);
+        if (i < this.cards.length) {
+          this.cards[i].selectedShape = shapeId;
+        }
       }
-      console.log(shapeIds);
+      
+      console.log('Carte aggiornate:', this.cards);
+    }
+  }
   
-    
-      for (let i = 0; i < shapeIds.length; i++) {
-        const cardId = this.cardArray[i];
-        const shapeId = shapeIds[i][0]; 
-        this.cards.find(card => card.id === cardId)!.selectedShape = shapeId;
-      }
-    }
+  getShapeIdFromChar(char: string): number {
+    const shapeMap: {[key: string]: number} = {'C': 0, 'S': 1, 'T': 2};
+    return shapeMap[char] ?? 0;
   }
-
-  getShapeIdsFromInputValue(input: string): number[] {
-  const shapeIds: number[] = [];
-  for (const char of input.toUpperCase()) {
-    switch (char) {
-      case 'C':
-        shapeIds.push(0);
-        break;
-      case 'S':
-        shapeIds.push(1);
-        break;
-      case 'T':
-        shapeIds.push(2);
-        break;
-      default:
-        console.log(`Input non gestito: ${char}`);
-        shapeIds.push(0);
-    }
-  }
-  return shapeIds;
-}
 
 }
 
