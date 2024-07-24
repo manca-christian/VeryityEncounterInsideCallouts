@@ -14,11 +14,25 @@
 
 <div class="grid-container">
   <app-select-card
-    *ngFor="let card of cardArray"
-    class="card{{ card }}"
-    id="card{{ card }}"
-    [index]="card"
-    [selectedShape]="prova"
+    class="card1"
+    id="card1"
+    [index]="1"
+    [selectedShape]="valueCard1"
+    [titleCard]="nameArray[1]"
+  ></app-select-card>
+  <app-select-card
+    class="card2"
+    id="card2"
+    [index]="2"
+    [selectedShape]="valueCard2"
+    [titleCard]="nameArray[2]"
+  ></app-select-card>
+  <app-select-card
+    class="card3"
+    id="card3"
+    [index]="3"
+    [selectedShape]="valueCard3"
+    [titleCard]="nameArray[0]"
   ></app-select-card>
 </div>
 

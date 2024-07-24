@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { SelectCardComponent } from '../select-card/select-card.component';
 import {
@@ -9,7 +9,6 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -25,17 +24,16 @@ import {
 })
 export class AppComponent {
   title = 'VerityEncounter';
-  cards = [
-    { id: 0, selectedShape: null as number | null },
-    { id: 1, selectedShape: null as number | null },
-    { id: 2, selectedShape: null as number | null }
-  ]
-
-  cardArray: number[] = [0, 1, 2];
   characterForm: FormGroup;
   errorMessage: string = '';
-  prova: string | undefined;
-
+  valueCard1: string | undefined;
+  valueCard2: string | undefined;
+  valueCard3: string | undefined;
+  nameArray: string[] = [
+    'Guardian symbol',
+    'First background symbol',
+    'Second background symbol',
+  ];
   constructor(private fb: FormBuilder) {
     this.characterForm = this.fb.group({
       charInput: [
@@ -64,37 +62,27 @@ export class AppComponent {
         shapeIds.push(this.getShapeIdsFromInputValue(inputValue[i]));
       }
       console.log(shapeIds);
-  
-    
-      for (let i = 0; i < shapeIds.length; i++) {
-        const cardId = this.cardArray[i];
-        const shapeId = shapeIds[i][0]; 
-        this.cards.find(card => card.id === cardId)!.selectedShape = shapeId;
-      }
     }
   }
 
   getShapeIdsFromInputValue(input: string): number[] {
-  const shapeIds: number[] = [];
-  for (const char of input.toUpperCase()) {
-    switch (char) {
-      case 'C':
-        shapeIds.push(0);
-        break;
-      case 'S':
-        shapeIds.push(1);
-        break;
-      case 'T':
-        shapeIds.push(2);
-        break;
-      default:
-        console.log(`Input non gestito: ${char}`);
-        shapeIds.push(0);
+    const shapeIds: number[] = [];
+    for (const char of input.toUpperCase()) {
+      switch (char) {
+        case 'C':
+          shapeIds.push(0);
+          break;
+        case 'S':
+          shapeIds.push(1);
+          break;
+        case 'T':
+          shapeIds.push(2);
+          break;
+        default:
+          console.log(`Input non gestito: ${char}`);
+          shapeIds.push(0);
+      }
     }
+    return shapeIds;
   }
-  return shapeIds;
 }
-
-}
-
-

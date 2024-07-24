@@ -10,19 +10,17 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './select-card.component.scss',
 })
 export class SelectCardComponent {
-@Input() cards!: any[];
+  
+  @Input() cards!: any[];
   @Input() index!: number;
   @Input() selectString: string | undefined;
-  @Input() selectedShape: string | undefined;
+  @Input() selectedShape: string | undefined;  
+  @Input() titleCard: string | undefined;  
   selectedOption: string = '';
   selectedCard: number | undefined;
   backgroundShapes: string[] = [];
   steps: string[] = [];
-  nameArray: string[] = [
-    'Guardian symbol',
-    'First background symbol',
-    'Second background symbol',
-  ];
+
 
   private SHAPE_IDS = {
     Circle: 1,
@@ -48,15 +46,14 @@ export class SelectCardComponent {
       case this.SHAPE_IDS.Triangle:
         return 'Triangle';
       default:
-        console.log('Figura non gestita:', id);
         return '';
     }
   }
 
-  onOptionSelected(event: Event): void {
+  onOptionSelected(event: Event,indexCard : number): void {
     const selectedValue = (event.target as HTMLSelectElement).value;
     if (selectedValue) {
-      console.log('Opzione selezionata:', selectedValue);
+      console.log('Opzione selezionata:', selectedValue," Card selezionata: ",indexCard);
       this.select(this.getShapeIdFromValue(selectedValue));
     }
   }
@@ -70,7 +67,6 @@ export class SelectCardComponent {
       case 'triangle':
         return 3;
       default:
-        console.log('Opzione non gestita:', value);
         return 0;
     }
   }
