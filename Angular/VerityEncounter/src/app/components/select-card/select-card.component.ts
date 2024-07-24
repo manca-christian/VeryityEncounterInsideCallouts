@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, input, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -10,7 +10,7 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './select-card.component.scss',
 })
 export class SelectCardComponent {
-  
+@Input() cards!: any[];
   @Input() index!: number;
   @Input() selectString: string | undefined;
   @Input() selectedShape: string | undefined;
@@ -130,19 +130,16 @@ export class SelectCardComponent {
   ) {
     backgroundShapes.forEach((shape, index) => {
       this.steps.push(
-        `Step ${
-          index + 1
+        `Step ${index + 1
         }: Take the ${shape} and give it to the statue that is holding a ${shape}.`
       );
     });
     this.steps.push(
-      `Step ${
-        backgroundShapes.length + 1
+      `Step ${backgroundShapes.length + 1
       }: Wait for your team to send you the two ${guardianShape}s.`
     );
     this.steps.push(
-      `Step ${
-        backgroundShapes.length + 2
+      `Step ${backgroundShapes.length + 2
       }: Take two ${guardianShape}s and give them to the statues that are NOT holding a ${guardianShape}.`
     );
   }

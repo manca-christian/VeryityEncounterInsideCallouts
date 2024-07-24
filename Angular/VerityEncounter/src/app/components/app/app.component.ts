@@ -25,14 +25,16 @@ import {
 })
 export class AppComponent {
   title = 'VerityEncounter';
-    cards = [
-      { id: 0, selectedShape: null as number | null },
-      { id: 1, selectedShape: null as number | null },
-      { id: 2, selectedShape: null as number | null }
-    ]
+  cards = [
+    { id: 0, selectedShape: null as number | null },
+    { id: 1, selectedShape: null as number | null },
+    { id: 2, selectedShape: null as number | null }
+  ]
+
+  cardArray: number[] = [0, 1, 2];
   characterForm: FormGroup;
   errorMessage: string = '';
-prova: string|undefined;
+  prova: string | undefined;
 
   constructor(private fb: FormBuilder) {
     this.characterForm = this.fb.group({
@@ -56,26 +58,43 @@ prova: string|undefined;
       this.errorMessage = 'Solo i caratteri "c", "s" e "t" sono consentiti.';
     } else {
       this.errorMessage = '';
-      this.prova = this.characterForm.get('charInput')?.value[0];
-      console.log(this.characterForm.get('charInput')?.value[1]);
-      console.log(this.characterForm.get('charInput')?.value[2]);
+      const inputValue = this.characterForm.get('charInput')!.value;
+      const shapeIds = [];
+      for (let i = 0; i < inputValue.length; i++) {
+        shapeIds.push(this.getShapeIdsFromInputValue(inputValue[i]));
+      }
+      console.log(shapeIds);
+  
+    
+      for (let i = 0; i < shapeIds.length; i++) {
+        const cardId = this.cardArray[i];
+        const shapeId = shapeIds[i][0]; 
+        this.cards.find(card => card.id === cardId)!.selectedShape = shapeId;
+      }
     }
   }
 
-  getShapeIdFromInputValue(char: string): number {
-    switch (char.toUpperCase()) {
+  getShapeIdsFromInputValue(input: string): number[] {
+  const shapeIds: number[] = [];
+  for (const char of input.toUpperCase()) {
+    switch (char) {
       case 'C':
-        return 0;
+        shapeIds.push(0);
+        break;
       case 'S':
-        return 1;
+        shapeIds.push(1);
+        break;
       case 'T':
-        return 2;
+        shapeIds.push(2);
+        break;
       default:
-        console.log('Input non gestito:', char);
-        return 0;
+        console.log(`Input non gestito: ${char}`);
+        shapeIds.push(0);
     }
   }
+  return shapeIds;
+}
 
 }
 
-  
+
