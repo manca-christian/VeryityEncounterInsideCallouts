@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, input, Input } from '@angular/core';
+import { Component, input, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -9,88 +9,73 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './select-card.component.html',
   styleUrl: './select-card.component.scss',
 })
-export class SelectCardComponent {
-  
+export class SelectCardComponent implements OnChanges {
   @Input() cards!: any[];
   @Input() index!: number;
   @Input() selectString: string | undefined;
-  @Input() selectedShape: string | undefined;  
-  @Input() titleCard: string | undefined;  
+  @Input() selectedShape: string | undefined;
+  @Input() titleCard: string | undefined;
+  
   selectedOption: string = '';
   selectedCard: number | undefined;
   backgroundShapes: string[] = [];
   steps: string[] = [];
 
-
-  private SHAPE_IDS = {
+   SHAPE_IDS = {
     Circle: 1,
     Square: 2,
     Triangle: 3,
   };
 
-  setOptionValue(option: string): void {
-    this.selectedOption = option;
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['selectedShape']) {
+      console.log('selectedShape changed:', this.selectedShape);
+      this.updateSelectedCard();
+    }
   }
-  select(id: number) {
-    this.selectedCard = id;
-    this.selectedShape = this.getShapeFromId(id);
-    console.log(this.selectedShape);
-  }
-
-  getShapeFromId(id: number): string {
-    switch (id) {
-      case this.SHAPE_IDS.Circle:
-        return 'Circle';
-      case this.SHAPE_IDS.Square:
-        return 'Square';
-      case this.SHAPE_IDS.Triangle:
-        return 'Triangle';
-      default:
-        return '';
+  
+  updateSelectedCard() {
+    if (this.selectedShape) {
+      const shapeId = this.getShapeIdFromValue(this.selectedShape);
+      this.selectedCard = shapeId;
+      this.selectedOption = this.selectedShape;
+      console.log('Updated selectedCard:', this.selectedCard);
+    } else {
+      this.selectedCard = undefined;
+      this.selectedOption = '';
     }
   }
 
-  onOptionSelected(event: Event,indexCard : number): void {
+  setOptionValue(option: string): void {
+    this.selectedOption = option;
+    this.selectedShape = option;
+  }
+
+  select(id: number) {
+    this.selectedCard = id;
+    this.selectedShape = this.getShapeFromId(id);
+    console.log('Selected shape:', this.selectedShape);
+  }
+
+  getShapeFromId(id: number): string {
+    return Object.keys(this.SHAPE_IDS).find(key => this.SHAPE_IDS[key as keyof typeof this.SHAPE_IDS] === id) || '';
+  }
+
+  onOptionSelected(event: Event, indexCard: number): void {
     const selectedValue = (event.target as HTMLSelectElement).value;
     if (selectedValue) {
-      console.log('Opzione selezionata:', selectedValue," Card selezionata: ",indexCard);
+      console.log('Option selected:', selectedValue, "Card selected:", indexCard);
       this.select(this.getShapeIdFromValue(selectedValue));
     }
   }
 
   getShapeIdFromValue(value: string): number {
-    switch (value) {
-      case 'circle':
-        return 1;
-      case 'square':
-        return 2;
-      case 'triangle':
-        return 3;
-      default:
-        return 0;
-    }
-  }
-
-  onInputChange(event: Event): void {
-    const inputValue = (event.target as HTMLInputElement).value.toUpperCase();
-    if (inputValue) {
-      console.log('Input value:', inputValue);
-      this.select(this.getShapeIdFromInputValue(inputValue));
-    }
-  }
-
-  getShapeIdFromInputValue(char: string): number {
-    switch (char.toUpperCase()) {
-      case 'C':
-        return this.SHAPE_IDS.Circle;
-      case 'S':
-        return this.SHAPE_IDS.Square;
-      case 'T':
-        return this.SHAPE_IDS.Triangle;
-      default:
-        console.log('Input non gestito:', char);
-        return 0;
-    }
+    const shapeMap: {[key: string]: number} = {
+      'circle': this.SHAPE_IDS.Circle,
+      'square': this.SHAPE_IDS.Square,
+      'triangle': this.SHAPE_IDS.Triangle
+    };
+    return shapeMap[value.toLowerCase()] || 0;
   }
 
   addBackgroundShape(shape: string) {

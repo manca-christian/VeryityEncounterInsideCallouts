@@ -3,22 +3,22 @@
   <div class="card-wrap">
     <button
       class="btn-card"
-      [ngClass]="{ selected: selectedCard === 1 }"
-      (click)="select(1); setOptionValue('circle')"
+      [ngClass]="{ selected: selectedCard === SHAPE_IDS.Circle }"
+      (click)="select(SHAPE_IDS.Circle); setOptionValue('Circle')"
     >
       <img class="select-image" src="assets/images/circle.svg" alt="circle" />
     </button>
     <button
       class="btn-card"
-      [ngClass]="{ selected: selectedCard === 2 }"
-      (click)="select(2); setOptionValue('square')"
+      [ngClass]="{ selected: selectedCard === SHAPE_IDS.Square }"
+      (click)="select(SHAPE_IDS.Square); setOptionValue('Square')"
     >
       <img class="select-image" src="assets/images/square.svg" alt="square" />
     </button>
     <button
       class="btn-card"
-      [ngClass]="{ selected: selectedCard === 3 }"
-      (click)="select(3); setOptionValue('triangle')"
+      [ngClass]="{ selected: selectedCard === SHAPE_IDS.Triangle }"
+      (click)="select(SHAPE_IDS.Triangle); setOptionValue('Triangle')"
     >
       <img
         class="select-image"
@@ -30,7 +30,7 @@
   <div class="select-wrap">
     <select
       style="width: 100%"
-      (change)="onOptionSelected($event,index)"
+      (change)="onOptionSelected($event, index)"
       [(ngModel)]="selectedShape"
       id="{{ index }}"
     >
@@ -40,4 +40,11 @@
       <option value="Triangle">Triangle</option>
     </select>
   </div>
+</div>
+
+<div *ngIf="steps.length > 0">
+  <h3>Steps:</h3>
+  <ol>
+    <li *ngFor="let step of steps">{{ step }}</li>
+  </ol>
 </div>

@@ -24,6 +24,11 @@ import {
 })
 export class AppComponent {
   title = 'VerityEncounter';
+  cards = [
+    { id: 0, selectedShape: null as number | null },
+    { id: 1, selectedShape: null as number | null },
+    { id: 2, selectedShape: null as number | null }
+  ]
   characterForm: FormGroup;
   errorMessage: string = '';
   valueCard1: string | undefined;
@@ -66,6 +71,7 @@ export class AppComponent {
         const shapeId = this.getShapeIdFromChar(inputValue[i]);
         if (i < this.cards.length) {
           this.cards[i].selectedShape = shapeId;
+          
         }
       }
       
@@ -75,7 +81,7 @@ export class AppComponent {
   
   getShapeIdFromChar(char: string): number {
     const shapeMap: {[key: string]: number} = {'C': 0, 'S': 1, 'T': 2};
-    return shapeMap[char] ?? 0;
+    return shapeMap[char] ?? null;
   }
 
 }
