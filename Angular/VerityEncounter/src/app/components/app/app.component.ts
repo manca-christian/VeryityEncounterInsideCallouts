@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, QueryList, ViewChildren } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { SelectCardComponent } from '../select-card/select-card.component';
 import {
@@ -23,12 +23,14 @@ import {
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
+  @ViewChildren(SelectCardComponent)
+  cardComponents!: QueryList<SelectCardComponent>;
   title = 'VerityEncounter';
   cards = [
     { id: 0, selectedShape: null as number | null },
     { id: 1, selectedShape: null as number | null },
-    { id: 2, selectedShape: null as number | null }
-  ]
+    { id: 2, selectedShape: null as number | null },
+  ];
   characterForm: FormGroup;
   errorMessage: string = '';
   valueCard1: string | undefined;
@@ -60,7 +62,16 @@ export class AppComponent {
     }
     return null;
   }
-
+  onInputChange(event: Event) {
+    const value = (event.target as HTMLInputElement).value;
+    if (value.length > 0) {
+      const lastChar = value[value.length - 1];
+      const index = value.length - 1;
+      if (index < this.cardComponents.length) {
+        this.cardComponents.toArray()[index].executeFunction(lastChar);
+      }
+    }
+  }
   onInput() {
     const inputControl = this.characterForm.get('charInput');
 
@@ -69,23 +80,22 @@ export class AppComponent {
     } else {
       this.errorMessage = '';
       const inputValue = (inputControl?.value || '').toUpperCase().slice(0, 3);
-      
-      this.cards.forEach(card => card.selectedShape = null);
-      
+
+      this.cards.forEach((card) => (card.selectedShape = null));
+
       for (let i = 0; i < inputValue.length; i++) {
         const shapeId = this.getShapeIdFromChar(inputValue[i]);
         if (i < this.cards.length) {
           this.cards[i].selectedShape = shapeId;
-          
         }
       }
-      
+
       console.log('Carte aggiornate:', this.cards);
     }
   }
 
   getShapeIdFromChar(char: string): number {
-    const shapeMap: {[key: string]: number} = {'C': 0, 'S': 1, 'T': 2};
+    const shapeMap: { [key: string]: number } = { C: 0, S: 1, T: 2 };
     return shapeMap[char] ?? 0;
   }
 }
