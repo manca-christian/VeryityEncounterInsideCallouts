@@ -51,11 +51,22 @@ export class AppComponent {
 
   onInputChange(event: Event) {
     const value = (event.target as HTMLInputElement).value;
-    if (value.length > 0) {
-      const lastChar = value[value.length - 1].toLowerCase();
-      const index = value.length - 1;
-      if (index < this.cardComponents.length) {
-        this.cardComponents.toArray()[index].executeFunction(lastChar);
+    const cardComponents = this.cardComponents.toArray();
+  
+    
+    if (value.length === 0) {
+      cardComponents.forEach(card => card.resetSelection());
+      return;
+    }
+  
+    // Process each character
+    for (let i = 0; i < 3; i++) {
+      if (i < value.length) {
+        const char = value[i].toLowerCase();
+        cardComponents[i].executeFunction(char);
+      } else {
+        // Reset cards that no longer have a corresponding character
+        cardComponents[i].resetSelection();
       }
     }
   }

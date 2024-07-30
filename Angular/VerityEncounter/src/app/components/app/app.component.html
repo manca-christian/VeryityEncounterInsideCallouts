@@ -44,8 +44,8 @@
     id="resultTextarea"
   >
     <p style="font-weight: bold">Steps</p>
-    <ol *ngIf="steps.length > 0">
-      <li *ngFor="let step of steps">{{ step }}</li>
-    </ol>
+    <div *ngIf="steps.length > 0">
+      <div *ngFor="let step of steps">{{ step }}</div>
+    </div>    
   </div>
 </div>
