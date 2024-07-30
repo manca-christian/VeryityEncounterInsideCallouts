@@ -23,6 +23,10 @@ export class SelectCardComponent {
   @Input() titleCard: string | undefined;
   @Output() shapeSelected = new EventEmitter<{ index: number, shape: string }>();
 
+  finalShape: string[];
+  constructor() {
+    this.finalShape = ['', '', ''];
+  }
   SHAPE_IDS = {
     Circle: 1,
     Square: 2,

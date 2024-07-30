@@ -16,7 +16,6 @@
     class="card1"
     id="card1"
     [index]="1"
-    [selectedShape]="valueCard1"
     [titleCard]="nameArray[1]"
     (shapeSelected)="onShapeSelected($event)"
   ></app-select-card>
@@ -24,7 +23,6 @@
     class="card2"
     id="card2"
     [index]="2"
-    [selectedShape]="valueCard2"
     [titleCard]="nameArray[2]"
     (shapeSelected)="onShapeSelected($event)"
   ></app-select-card>
@@ -32,13 +30,13 @@
     class="card3"
     id="card3"
     [index]="3"
-    [selectedShape]="valueCard3"
     [titleCard]="nameArray[0]"
     (shapeSelected)="onShapeSelected($event)"
   ></app-select-card>
 </div>
 <div class="form-floating">
   <div
+    *ngIf="steps.length > 0"
     class="form-control w-50"
     style="resize: none; border: solid; border-color: gray; height: 150px"
     id="resultTextarea"
