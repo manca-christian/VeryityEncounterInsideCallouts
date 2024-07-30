@@ -1,52 +1,93 @@
-.wrap {
-  width: 100%;
-  display: grid;
-  grid-template-rows: 50% 50%;
-  margin: 3rem 0 3rem 0;
-}
-.callouts {
-  margin: 10px auto 10px auto;
-  border-radius: 20px;
-}
-.input {
-  width: 50%;
-}
-.grid-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: auto auto;
-  gap: 10px;
-  justify-items: center;
-  width: fit-content;
-  margin: 0 auto 0 auto;
-}
-.card0 {
-  grid-column: 1 / 2;
-  grid-row: 2 / 3;
-  padding-top: 3rem;
-}
-.card1 {
-  grid-column: 1 / 2;
-  grid-row: 1 /2;
-}
-.card2 {
-  grid-column: 2/3;
-  grid-row: 1 / 2;
-}
-.error {
-  color: red;
-  font-size: 0.9em;
-  text-align: center;
-}
-.text-area {
-  display: grid;
-  width: fit-content;
-  margin: auto;
-  padding: 3rem;
-}
-.form-floating {
-  display: flex;
-  justify-content: center;
-  padding-top: 3rem;
-  margin-bottom: 3rem;
-}
+  /* Stili esistenti */
+  .wrap {
+    width: 100%;
+    display: grid;
+    grid-template-rows: 50% 50%;
+    margin: 3rem 0 3rem 0;
+  }
+
+  .callouts {
+    margin: 10px auto 10px auto;
+    border-radius: 20px;
+  }
+
+  .input {
+    width: 50%;
+  }
+
+  .grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 10px;
+    justify-items: center;
+    width: fit-content;
+    margin: 0 auto 0 auto;
+  }
+
+  .card0 {
+    grid-column: 1 / 2;
+    grid-row: 2 / 3;
+    padding-top: 3rem;
+  }
+
+  .card1 {
+    grid-column: 1 / 2;
+    grid-row: 1 /2;
+  }
+
+  .card2 {
+    grid-column: 2/3;
+    grid-row: 1 / 2;
+  }
+
+  .error {
+    color: red;
+    font-size: 0.9em;
+    text-align: center;
+  }
+
+  .text-area {
+    display: grid;
+    width: fit-content;
+    margin: auto;
+    padding: 3rem;
+  }
+
+  .form-floating {
+    display: flex;
+    justify-content: center;
+    padding-top: 3rem;
+    margin-bottom: 3rem;
+  }
+
+  /* Stili per dispositivi mobili */
+  @media (max-width: 768px) {
+    .grid-container {
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Adatta le colonne in base allo spazio disponibile */
+      grid-template-rows: auto auto; /* Due righe su mobile */
+      gap: 10px;
+      justify-content: flex-end; /* Allinea le card a destra */
+      width: 100%; /* Occupa l'intera larghezza */
+      margin: 0; /* Rimuovi i margini */
+    }
+
+    .card0, .card1, .card2 {
+      grid-column: auto; /* Le card occupano automaticamente le colonne */
+      grid-row: auto; /* Le card si posizionano automaticamente nelle righe */
+    }
+
+    .input {
+      width: 90%; /* Riduci la larghezza dell'input */
+    }
+
+    .text-area {
+      width: 100%; /* Occupa l'intera larghezza del contenitore */
+      padding: 1.5rem; /* Riduci il padding */
+      box-sizing: border-box; /* Includi il padding e il bordo nella larghezza totale */
+    }
+
+    .text-area > * { /* Seleziona tutti gli elementi figli diretti di .text-area */
+      grid-column: 1; /* Assicurati che gli elementi figli occupino l'intera larghezza */
+    }
+  }

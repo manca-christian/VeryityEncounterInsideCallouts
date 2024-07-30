@@ -47,10 +47,11 @@ export class SelectCardComponent {
     this.shapeSelected.emit({ index: this.index, shape: option });
   }
 
-  onOptionSelected(event: Event, index:number) {
+  onOptionSelected(event: Event, index: number) {
     const selectedValue = (event.target as HTMLSelectElement).value;
     if (selectedValue) {
       this.setOptionValue(selectedValue);
+      this.selectByShape(selectedValue);
     }
   }
 
@@ -69,6 +70,20 @@ export class SelectCardComponent {
     const shapeId = shapeMap[char.toLowerCase()];
     if (shapeId) {
       this.select(shapeId);
+    }
+  }
+
+  selectByShape(shape: string) {
+    switch (shape) {
+      case 'Circle':
+        this.select(this.SHAPE_IDS.Circle);
+        break;
+      case 'Square':
+        this.select(this.SHAPE_IDS.Square);
+        break;
+      case 'Triangle':
+        this.select(this.SHAPE_IDS.Triangle);
+        break;
     }
   }
 
