@@ -28,6 +28,9 @@ export class AppComponent {
   
   characterForm: FormGroup;
   errorMessage: string = '';
+  valueCard1: string | undefined;
+  valueCard2: string | undefined;
+  valueCard3: string | undefined;
   nameArray: string[] = [
     'Guardian symbol',
     'First background symbol',
@@ -47,12 +50,6 @@ export class AppComponent {
   }
 
   onInputChange(event: Event) {
-    const inputControl = this.characterForm.get('charInput');
-    if (inputControl?.errors?.['invalidCharacter']) {
-      this.errorMessage = 'Solo i caratteri "c", "s" e "t" sono consentiti.';
-    } else {
-      this.errorMessage = '';
-    }
     const value = (event.target as HTMLInputElement).value;
     const cardComponents = this.cardComponents.toArray();
   
