@@ -23,9 +23,9 @@ import {
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
-  @ViewChildren(SelectCardComponent)
-  cardComponents!: QueryList<SelectCardComponent>;
   title = 'VerityEncounter';
+  @ViewChildren(SelectCardComponent) cardComponents!: QueryList<SelectCardComponent>;
+  
   characterForm: FormGroup;
   errorMessage: string = '';
   nameArray: string[] = [
@@ -33,23 +33,19 @@ export class AppComponent {
     'First background symbol',
     'Second background symbol',
   ];
+  steps: string[] = [];
+  
   constructor(private fb: FormBuilder) {
     this.characterForm = this.fb.group({
-      charInput: [
-        '',
-        [Validators.required, Validators.maxLength(3), this.allowedCharacters],
-      ],
+      charInput: ['', [Validators.required, Validators.maxLength(3), this.allowedCharacters]]
     });
   }
 
   allowedCharacters(control: { value: string }) {
     const validCharacters = /^[cstCST]*$/;
-    if (!validCharacters.test(control.value)) {
-      return { invalidCharacter: true };
-    }
-    return null;
+    return validCharacters.test(control.value) ? null : { invalidCharacter: true };
   }
-  
+
   onInputChange(event: Event) {
     const inputControl = this.characterForm.get('charInput');
     if (inputControl?.errors?.['invalidCharacter']) {
@@ -59,11 +55,51 @@ export class AppComponent {
     }
     const value = (event.target as HTMLInputElement).value;
     if (value.length > 0) {
-      const lastChar = value[value.length - 1];
+      const lastChar = value[value.length - 1].toLowerCase();
       const index = value.length - 1;
       if (index < this.cardComponents.length) {
         this.cardComponents.toArray()[index].executeFunction(lastChar);
       }
+    }
+  }
+
+  onShapeSelected(event: { index: number, shape: string }) {
+    switch(event.index) {
+      case 1:
+        this.valueCard1 = event.shape;
+        break;
+      case 2:
+        this.valueCard2 = event.shape;
+        break;
+      case 3:
+        this.valueCard3 = event.shape;
+        break;
+    }
+    this.generateSteps();
+  }
+
+  generateSteps() {
+    const shapes = [this.valueCard3, this.valueCard1, this.valueCard2]; // Guardian, First background, Second background
+    const [guardianShape, firstBackground, secondBackground] = shapes;
+
+    if (!guardianShape || !firstBackground || !secondBackground) {
+      this.steps = ['Please select all shapes to generate steps.'];
+      return;
+    }
+
+    this.steps = [];
+
+    if (firstBackground === secondBackground && firstBackground !== guardianShape) {
+      this.steps.push(`Step 1: Take the ${firstBackground} and give it to the statue that is holding a ${firstBackground}.`);
+      this.steps.push(`Step 2: Wait until your team is also ready with the first step.`);
+      this.steps.push(`Step 3: Take 2 ${firstBackground}s and give them to the 2 statues that are not holding a ${firstBackground}.`);
+    } else if (firstBackground !== secondBackground) {
+      this.steps.push(`Step 1: Take the ${firstBackground} and give it to the statue that is holding a ${firstBackground}.`);
+      this.steps.push(`Step 2: Take the ${secondBackground} and give it to the statue that is holding a ${secondBackground}.`);
+      this.steps.push(`Step 3: Wait for your team to send you the two ${guardianShape}s.`);
+      this.steps.push(`Step 4: Take two ${guardianShape}s and give them to the statues that are NOT holding a ${guardianShape}.`);
+    } else {
+      this.steps.push('Invalid combination of shapes. Please select different shapes.');
     }
   }
 }

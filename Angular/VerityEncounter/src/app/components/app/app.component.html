@@ -11,28 +11,29 @@
   />
   <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
 </div>
-
 <div class="grid-container">
   <app-select-card
     class="card1"
     id="card1"
     [index]="1"
     [titleCard]="nameArray[1]"
+    (shapeSelected)="onShapeSelected($event)"
   ></app-select-card>
   <app-select-card
     class="card2"
     id="card2"
     [index]="2"
     [titleCard]="nameArray[2]"
+    (shapeSelected)="onShapeSelected($event)"
   ></app-select-card>
   <app-select-card
     class="card3"
     id="card3"
     [index]="3"
     [titleCard]="nameArray[0]"
+    (shapeSelected)="onShapeSelected($event)"
   ></app-select-card>
 </div>
-
 <div class="form-floating">
   <div
     *ngIf="steps.length > 0"
@@ -41,7 +42,7 @@
     id="resultTextarea"
   >
     <p style="font-weight: bold">Steps</p>
-    <ol>
+    <ol *ngIf="steps.length > 0">
       <li *ngFor="let step of steps">{{ step }}</li>
     </ol>
   </div>
