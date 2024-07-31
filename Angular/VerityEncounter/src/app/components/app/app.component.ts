@@ -97,15 +97,22 @@ export class AppComponent {
 
     this.steps = [];
 
-    if (firstBackground === secondBackground && firstBackground !== guardianShape) {
-      this.steps.push(`Step 1: Take the ${firstBackground} and give it to the statue that is holding a ${firstBackground}.`);
+    if (firstBackground !== secondBackground && firstBackground === guardianShape) {
+      this.steps.push(`Step 1: Take the ${secondBackground} and give it to the statue that is holding a ${secondBackground}.`);
       this.steps.push(`Step 2: Wait until your team is also ready with the first step.`);
       this.steps.push(`Step 3: Take 2 ${firstBackground}s and give them to the 2 statues that are not holding a ${firstBackground}.`);
-    } else if (firstBackground !== secondBackground) {
+    } else if (firstBackground !== secondBackground && secondBackground === guardianShape) {
+      this.steps.push(`Step 1: Take the ${firstBackground} and give it to the statue that is holding a ${firstBackground}.`);
+      this.steps.push(`Step 2: Wait until your team is also ready with the first step.`);
+      this.steps.push(`Step 3: Take 2 ${secondBackground}s and give them to the 2 statues that are not holding a ${secondBackground}.`);
+    } else if (firstBackground !== secondBackground && (firstBackground !== guardianShape) && (secondBackground !== guardianShape)) {
       this.steps.push(`Step 1: Take the ${firstBackground} and give it to the statue that is holding a ${firstBackground}.`);
       this.steps.push(`Step 2: Take the ${secondBackground} and give it to the statue that is holding a ${secondBackground}.`);
       this.steps.push(`Step 3: Wait for your team to send you the two ${guardianShape}s.`);
       this.steps.push(`Step 4: Take two ${guardianShape}s and give them to the statues that are NOT holding a ${guardianShape}.`);
+    } else if (firstBackground === secondBackground && firstBackground === guardianShape) {
+      this.steps.push(`Step 1: Wait until your team is also ready with the first step.`);
+      this.steps.push(`Step 2: Take 2 ${firstBackground}s and give them to the 2 statues that are not holding a ${firstBackground}.`);
     } else {
       this.steps.push('Invalid combination of shapes. Please select different shapes.');
     }
